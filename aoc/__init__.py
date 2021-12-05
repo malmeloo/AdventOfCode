@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-import requests
+from timeit import default_timer as timer
 
 from . import http
 
@@ -12,12 +12,12 @@ PUZZLE_DAY = SCRIPT_DIR.name
 PUZZLE_YEAR = SCRIPT_DIR.parent.name
 
 CHALLENGE_COUNT = 0
-CHALLENGES = []
+TOTAL_TIME = 0
 
 
 def get_input(delim='\n', data_type=str):
-    with Path(SCRIPT_DIR, 'input.txt').open('r') as file:
-        input_text = file.read()
+    with Path(SCRIPT_DIR, 'input.txt').open('r') as f:
+        input_text = f.read()
 
     res = [data_type(line) for line in input_text.split(delim) if line]
 
@@ -25,8 +25,8 @@ def get_input(delim='\n', data_type=str):
 
 
 def get_example(delim='\n', data_type=str):
-    with Path(SCRIPT_DIR, 'example.txt').open('r') as file:
-        input_text = file.read()
+    with Path(SCRIPT_DIR, 'example.txt').open('r') as f:
+        input_text = f.read()
 
     res = [data_type(line) for line in input_text.split(delim) if line]
 
@@ -35,11 +35,20 @@ def get_example(delim='\n', data_type=str):
 
 def run(callback, *args, **kwargs):
     global CHALLENGE_COUNT
+    global TOTAL_TIME
     CHALLENGE_COUNT += 1
 
     print(f'--- Challenge {CHALLENGE_COUNT}')
+
+    start = timer()
     res = callback(*args, **kwargs)
+    end = timer()
+
+    delta_ms = (end - start) * 1000
+    TOTAL_TIME += delta_ms
+
     print(f'Output: {res}')
+    print(f'Took:   {delta_ms:.2f}ms')
     print()
 
     return res

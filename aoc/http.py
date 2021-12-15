@@ -3,6 +3,7 @@ from pathlib import Path
 import requests
 
 INPUT_URL = 'https://adventofcode.com/{year}/day/{day}/input'
+LEADERBOARD_URL = 'https://adventofcode.com/{year}/leaderboard/private/view/{leaderboard_id}.json'
 
 
 class InvalidCookieException(Exception):
@@ -32,3 +33,18 @@ def download_input(cookie: str, year: int, day: int):
     r.raise_for_status()
 
     return r.text
+
+
+def download_leaderboard(cookie: str, year: int, lb_id: int):
+    r = requests.get(
+        LEADERBOARD_URL.format(year=year, leaderboard_id=lb_id),
+        cookies={'session': cookie}
+    )
+    if r.status_code == 404:
+        return None
+    elif r.status_code == 500:
+        raise InvalidCookieException
+
+    r.raise_for_status()
+
+    return r.json()

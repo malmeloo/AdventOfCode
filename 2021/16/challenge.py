@@ -37,11 +37,11 @@ class OperatorPacket(Packet):
             return min(p.value for p in self.packets)
         elif self.type_id == 3:  # max
             return max(p.value for p in self.packets)
-        elif self.type_id == 5:
+        elif self.type_id == 5:  # gt
             return 1 if self.packets[0].value > self.packets[1].value else 0
-        elif self.type_id == 6:
+        elif self.type_id == 6:  # st
             return 1 if self.packets[0].value < self.packets[1].value else 0
-        elif self.type_id == 7:
+        elif self.type_id == 7:  # eq
             return 1 if self.packets[0].value == self.packets[1].value else 0
 
 

@@ -34,7 +34,7 @@ def parse_leaderboard(lb: dict):
 
 def _fmt_user(user: dict, avg):
     delta_dist = round(user.get('delta') - avg)
-    return f'{user["name"]:<20} {user["delta"]:<15} {delta_dist}'
+    return f'{user["name"]:<30} {user["delta"]:<15} {delta_dist}'
 
 
 def main():
@@ -61,7 +61,7 @@ def main():
         delta_lb = sorted(parsed[day], key=lambda user: user.get('delta'))
 
         print(f'--- Day: {day} (delta average: {round(avg_delta)})')
-        print('User name                Star delta      Dist from average')
+        print('User name                          Star delta      Dist from average')
         print(f'1 - {_fmt_user(delta_lb[0], avg_delta)}')
         print(f'2 - {_fmt_user(delta_lb[1], avg_delta)}')
         print(f'3 - {_fmt_user(delta_lb[2], avg_delta)}')

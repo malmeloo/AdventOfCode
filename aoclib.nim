@@ -1,4 +1,4 @@
-import std/[strutils, os]
+import std/os
 
 proc getInput*(filename: string): seq[string] =
   let path: string = getAppFilename().parentDir()

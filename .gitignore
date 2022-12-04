@@ -315,3 +315,4 @@ cython_debug/
 
 # CUSTOM: Nim compiled code
 challenge
+golf

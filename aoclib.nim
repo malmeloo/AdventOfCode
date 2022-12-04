@@ -1,7 +1,7 @@
-import strutils
+import std/[strutils, os]
 
 proc getInput*(filename: string): seq[string] =
-  let path: string = rsplit(currentSourcePath(), "/", maxsplit=1)[0]
+  let path: string = getAppFilename().parentDir()
   let f = open(path & "/" & filename)
   defer: f.close()
 

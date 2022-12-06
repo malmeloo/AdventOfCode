@@ -1,5 +1,9 @@
+# import nimprof;
 import ../../aoclib;
-import std/[strutils, sequtils, parseutils, algorithm, re];
+import std/[strutils, sequtils, parseutils, re];
+
+
+let numRe = re"\d+";
 
 
 proc parseCrates(inp: seq[string]): (seq[seq[char]], seq[string]) =
@@ -24,11 +28,12 @@ proc challenge1(inp: seq[string]): string =
   var (crates, rules) = parseCrates(inp);
 
   for line in rules:
-    let rule = findAll(line, re"\d+").map(parseInt);
+    # let rule = findAll(line, numRe).map(parseInt);
+    let rule = line.split(" ")
 
-    for _ in countup(1, rule[0]):
-      let crate = pop(crates[rule[1] - 1]);
-      crates[rule[2] - 1].add(crate);
+    for _ in countup(1, parseInt(rule[1])):
+      let crate = pop(crates[parseInt(rule[3]) - 1]);
+      crates[parseInt(rule[5]) - 1].add(crate);
   
   return crates.map(proc(x: seq[char]): char = x[^1]).join
 
@@ -36,12 +41,12 @@ proc challenge2(inp: seq[string]): string =
   var (crates, rules) = parseCrates(inp);
 
   for line in rules:
-    let rule = findAll(line, re"\d+").map(parseInt);
-    let insPos = len(crates[rule[2] - 1]);
+    let rule = line.split(" ")
+    let insPos = len(crates[parseInt(rule[5]) - 1]);
 
-    for _ in countup(1, rule[0]):
-      let crate = pop(crates[rule[1] - 1]);
-      crates[rule[2] - 1].insert(crate, insPos);
+    for _ in countup(1, parseInt(rule[1])):
+      let crate = pop(crates[parseInt(rule[3]) - 1]);
+      crates[parseInt(rule[5]) - 1].insert(crate, insPos);
   
   return crates.map(proc(x: seq[char]): char = x[^1]).join
 

@@ -1,6 +1,6 @@
 # import nimprof;
 import ../../aoclib;
-import std/[strutils, sequtils, tables, os, sugar, algorithm];
+import std/[strutils, sequtils, tables, sugar, algorithm];
 
 
 proc parseDirs(inp: seq[string]): Table[string, int] =
